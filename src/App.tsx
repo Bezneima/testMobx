@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useMyStore} from "./hooks/useMyStore";
+import {observer} from "mobx-react-lite";
+import {InsideCounter} from "./components/insideCounter";
+import {FakeAccaunts} from "./components/FakeAccaunts";
 
-function App() {
+const App: React.FC = observer(() => {
+  const myStore = useMyStore();
+  const {mainCounterValue} = myStore;
+
+  const onIncriment = () => {
+      myStore.incMain();
+  }
+
+  const onDecriment = () => {
+      myStore.decMain();
+  }
+    console.info('Рендер app');
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/*раскоменти это потом, это переменные коорые зависимые от других*/}
+        {/*<div>Всего: {total}</div>*/}
+      {mainCounterValue}
+        <div>
+        <button
+            value={''}
+            onClick={onIncriment}
         >
-          Learn React
-        </a>
-      </header>
+            Инкримент
+        </button>
+        <button
+            value={''}
+            onClick={onDecriment}
+        >
+            Декримент
+        </button>
+        </div>
+        <InsideCounter/>
+        <FakeAccaunts/>
     </div>
   );
-}
+});
 
 export default App;
